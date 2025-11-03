@@ -31,6 +31,10 @@ struct productos{
     }
 };
 ////////////////////////////
+void registrar(usuario* &inicio_usua,string nombre_usua, string apellido_usua,int edad_usua)
+{
+	
+}
 
 
 
@@ -66,12 +70,31 @@ void eliminar(productos* &inicio_pro,string nombre_elim)
 		delete temp;
 		return;
 	}
+	
+	productos* anterior=inicio_pro;
+	productos* actual=inicio_pro->siguiente_pro;
+	
+	while(actual != NULL && actual->nom_producto!=nombre_elim)
+	{
+		anterior=actual;
+		actual=actual->siguiente_pro;
+	}
+	
+	if(actual==NULL)
+	{
+		cout<<"elemento no encontrado"<<endl;
+	}else
+	{
+		anterior->siguiente_pro=actual->siguiente_pro;
+		delete actual;
+		cout<<endl<<"elemento eliminado"<<endl;
+	}
 }
 
 
 
 void Menu(){
-	cout<<"\n============ MENU ============\n";
+	cout<<"\n============ TIENDA DON PEPE ============\n";
 	cout<<"1) Registrar Usuario\n";
 	cout<<"2) Agregar productos, descuentos y cantidad\n";
 	cout<<"3) Ver nombre, precio y cantidad\n";
@@ -111,7 +134,6 @@ int main()
 			
 			case 2:
 				{
-					
 					cin.ignore();
 					cout<<"ingrese el nombre del producto: ";
 					getline(cin,nombre_pro);
@@ -119,10 +141,13 @@ int main()
 					cin>>precio_pro;
 					cout<<"ingrese la cantidad: ";
 					cin>>cantidad_pro;
-					agregar(inicio_pro,nombre_pro,precio_pro,cantidad_pro);
+					agregarProducto(inicio_pro,nombre_pro,precio_pro,cantidad_pro);
 				}break;
 			
 			case 3:
+				{
+					
+				};
 			
 			case 4:
 				{
