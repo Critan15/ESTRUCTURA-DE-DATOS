@@ -10,9 +10,7 @@ void Menu(){
 	cout<<"3) Ver nombre, precio y cantidad\n";
 	cout<<"4) Eliminar productos\n";
 	cout<<"5) Salir\n";
-	cout<<"Ingrese opcion";
-	cin<<opcion;
-	cin.ignore(1024,'\n');
+	cout<<"Ingrese opcion"
 }
 
 int main(){
@@ -21,7 +19,8 @@ int main(){
 	do{
 		Menu();
 		cin >> opcion;
-		
+        cin.ignore(1024,'\n');
+        
 		switch (opcion){
 			case 1:
 			
