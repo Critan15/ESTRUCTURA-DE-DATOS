@@ -33,8 +33,46 @@ struct productos{
 ////////////////////////////
 void registrar(usuario* &inicio_usua,string nombre_usua, string apellido_usua,int edad_usua)
 {
-	
+	usuario* nuevo=new usuario(nombre_usua,apellido_usua,edad_usua);
+	if(inicio_usua==NULL)
+	{
+		inicio_usua=nuevo;
+	}else
+	{
+		usuario* temp=inicio_usua;
+		while(temp->siguiente!=NULL)
+		{
+			temp=temp->siguiente;
+		}
+		temp->siguiente=nuevo;
+	}
 }
+/////////////////////
+void Verdescripcionproductos(productos* inicio_pro){
+	
+	if(inicio_pro==NULL)
+	{
+		cout<<"la lista esta vacia"<<endl;
+		return;
+	}
+	
+	string productobuscar;
+	cout << "Ingrese producto a buscar: ";
+	getline(cin, productobuscar);
+	
+	productos* busquedanombre = inicio_pro;
+	int posicion = 0;
+	while (busquedanombre!= NULL){
+		if(busquedanombre->nom_producto == productobuscar){
+			cout << "Producto encontrad "<<endl;
+			cout<<"Nombre de producto: "<<busquedanombre->nom_producto<<"\nPrecio de producto : S/"<<busquedanombre->precio_producto<<"\nCantidad de producto: "<<busquedanombre->cantidad_producto<<endl;
+			return;
+		}
+		busquedanombre=busquedanombre->siguiente_pro;
+	}
+	cout << "Elemento no encontrado"<<endl;
+}
+///////////////////////////////////
 
 
 
@@ -86,8 +124,22 @@ void eliminar(productos* &inicio_pro,string nombre_elim)
 	}else
 	{
 		anterior->siguiente_pro=actual->siguiente_pro;
-		delete actual;
 		cout<<endl<<"elemento eliminado"<<endl;
+		delete actual;
+	}
+}
+////////////////////
+void mostrar(productos* inicio)
+{
+	if(inicio==NULL)
+	{
+		cout<<"la lista esta vacia"<<endl;
+		return;
+	}
+	while(inicio!=NULL)
+	{
+		cout<<"Nombre de producto: "<<inicio->nom_producto<<"\nPrecio de producto : S/"<<inicio->precio_producto<<"\nCantidad de producto: "<<inicio->cantidad_producto<<endl;
+		inicio=inicio->siguiente_pro;
 	}
 }
 
@@ -97,10 +149,11 @@ void Menu(){
 	cout<<"\n============ TIENDA DON PEPE ============\n";
 	cout<<"1) Registrar Usuario\n";
 	cout<<"2) Agregar productos, descuentos y cantidad\n";
-	cout<<"3) Ver nombre, precio y cantidad\n";
+	cout<<"3) Buscar nombre, precio y cantidad\n";
 	cout<<"4) Eliminar productos\n";
-	cout<<"5) Salir\n";
-	cout<<"Ingrese opcion";
+	cout<<"5) Mostrar todos los productos\n";
+	cout<<"6) Salir\n";
+	cout<<"Ingrese opcion: ";
 }
 
 int main()
@@ -110,6 +163,7 @@ int main()
 	
 	
 	string nombre_pro,nombre_usua,apellido_usua, nombre_pro_elim;
+	
 	double precio_pro;
 	int cantidad_pro,edad_usua;
 	
@@ -134,7 +188,6 @@ int main()
 			
 			case 2:
 				{
-					cin.ignore();
 					cout<<"ingrese el nombre del producto: ";
 					getline(cin,nombre_pro);
 					cout<<"ingrese el precio del producto: ";
@@ -142,12 +195,14 @@ int main()
 					cout<<"ingrese la cantidad: ";
 					cin>>cantidad_pro;
 					agregarProducto(inicio_pro,nombre_pro,precio_pro,cantidad_pro);
+					cin.ignore();
 				}break;
 			
 			case 3:
 				{
 					
-				};
+					Verdescripcionproductos(inicio_pro);
+				}break;
 			
 			case 4:
 				{
@@ -155,8 +210,11 @@ int main()
 					cin>>nombre_pro_elim;
 					eliminar(inicio_pro,nombre_pro_elim);
 				}break;
-				
 			case 5:
+				{
+					mostrar(inicio_pro);
+				}break;
+			case 6:
 				cout<<"Gracias por su visita vuelva pronto\n";
 				break;
 			default:
@@ -164,7 +222,7 @@ int main()
 				break;
 		}
 		
-	}while(opcion!=5);
+	}while(opcion!=6);
 }
 
 
